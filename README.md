@@ -1,33 +1,42 @@
 <div align="center">
 
-# rubikabot
+**🌐 زبان / Language**
 
-**A modern Python framework for building Rubika bots**
+[![FA](https://img.shields.io/badge/FA-%D9%81%D8%A7%D8%B1%D8%B3%DB%8C-brightgreen?style=for-the-badge)](README.md)
+[![EN](https://img.shields.io/badge/EN-English-blue?style=for-the-badge)](README_EN.md)
 
-Typed models · Dispatcher & routers · Filters · FSM · Keyboard builders · Zero dependencies
+</div>
+
+<div dir="rtl" align="center">
+
+# روبیکابات (rubikabot)
+
+**فریم‌ورک مدرن پایتون برای ساخت بات‌های روبیکا**
+
+مدل‌های تایپ‌دار · دیسپچر و روتر · فیلترها · FSM · سازنده کی‌پد · بدون هیچ وابستگی
 
 [![License: MIT](https://img.shields.io/github/license/AmirAsadyan/rubikabot)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
 [![Dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](pyproject.toml)
 [![GitHub stars](https://img.shields.io/github/stars/AmirAsadyan/rubikabot?style=social)](https://github.com/AmirAsadyan/rubikabot/stargazers)
 
-**English** · [فارسی](README_FA.md)
-
 </div>
 
----
+<div dir="rtl">
 
-[Rubika](https://rubika.ir) is one of Iran's largest messengers, and its
-Bot API is simple: one POST endpoint, a token, JSON in and out. What the
-API does not give you is everything around it: routing messages to
-handlers, remembering where a user is in a multi-step form, building
-keypad JSON by hand, counting UTF-16 units so a formatted message is not
-rejected, keeping the polling cursor across restarts.
+روبیکا یکی از بزرگ‌ترین پیام‌رسان‌های ایران است و API باتش ساده است: یک
+آدرس POST، یک توکن، و JSON در ورودی و خروجی. اما API همه چیزهای دوروبرش
+را به شما نمی‌دهد: رساندن هر پیام به هندلر درست، یادآوری اینکه کاربر در
+کدام مرحله یک فرم چندمرحله‌ای است، ساختن JSON کی‌پد با دست، شمردن
+واحدهای UTF-16 تا یک پیام فرمت‌دار رد نشود، نگه‌داشتن کرسر پولینگ بین
+ری‌استارت‌ها.
 
-**rubikabot is that layer.** It is built on the official
-[Bot API v3](https://rubika.ir/botapi) and shaped like the frameworks
-Python bot developers already know (aiogram, python-telegram-bot), so a
-real bot takes tens of lines, not hundreds.
+**روبیکابات دقیقاً همین لایه است.** بر پایه
+[API رسمی بات روبیکا نسخه ۳](https://rubika.ir/botapi) ساخته شده و شکلش
+مثل فریم‌ورک‌هایی است که توسعه‌دهنده‌های بات پایتون از قبل می‌شناسند
+(aiogram و python-telegram-bot)، تا یک بات واقعی ده‌ها خط شود، نه صدها خط.
+
+</div>
 
 ```python
 from rubikabot import Bot, Dispatcher, Command
@@ -42,63 +51,74 @@ def start(message):
 dp.start_polling()
 ```
 
-## Contents
+<div dir="rtl">
 
-- [Features](#features)
-- [Install](#install)
-- [Your first bot](#your-first-bot)
-- [Handlers and routers](#handlers-and-routers)
-- [Filters](#filters)
-- [Keypads](#keypads)
-- [Multi-step forms with FSM](#multi-step-forms-with-fsm)
-- [Formatted text](#formatted-text)
-- [Files, polls, locations and contacts](#files-polls-locations-and-contacts)
-- [Webhooks](#webhooks)
-- [Error handling and middleware](#error-handling-and-middleware)
-- [API coverage](#api-coverage)
-- [Testing your bot](#testing-your-bot)
-- [FAQ](#faq)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
+## فهرست
 
-## Features
+- [امکانات](#امکانات)
+- [نصب](#نصب)
+- [اولین بات شما](#اولین-بات-شما)
+- [هندلرها و روترها](#هندلرها-و-روترها)
+- [فیلترها](#فیلترها)
+- [کی‌پدها](#کیپدها)
+- [فرم‌های چندمرحله‌ای با FSM](#فرمهای-چندمرحلهای-با-fsm)
+- [متن فرمت‌دار](#متن-فرمتدار)
+- [فایل، نظرسنجی، موقعیت و مخاطب](#فایل-نظرسنجی-موقعیت-و-مخاطب)
+- [وب‌هوک](#وبهوک)
+- [مدیریت خطا و میدل‌ویر](#مدیریت-خطا-و-میدلویر)
+- [پوشش API](#پوشش-api)
+- [تست‌کردن بات](#تستکردن-بات)
+- [سؤالات پرتکرار](#سؤالات-پرتکرار)
+- [نقشه راه](#نقشه-راه)
+- [مشارکت](#مشارکت)
+- [مجوز](#مجوز)
 
-| Area | What you get |
+## امکانات
+
+| بخش | چه چیزی می‌گیرید |
 |---|---|
-| **Typed models** | Dataclasses for every API object (Message, Update, InlineMessage, Chat, Keypad, Button, Poll, File, Metadata and more) and every documented enum, with `from_dict` / `to_dict`, tolerant of unknown fields |
-| **Bot client** | All 19 API methods as typed methods on one `Bot` object, a pluggable HTTP transport, clear `APIError` / `TransportError` exceptions, and a token that never leaks into logs or reprs |
-| **Routing** | A `Dispatcher` plus any number of `Router`s, with a decorator per update kind: messages, edited and removed messages, bot start/stop, group events and inline keypad taps |
-| **Filters** | `Command`, `Text`, `ButtonId`, `ChatType`, `StateFilter`, any callable, and the magic filter `F` (`F.text == "سلام"`, `F.button_id == "buy"`), all composable with `&`, `\|` and `~` |
-| **FSM** | `StatesGroup` and per chat/user `FSMContext` for multi-step conversations, stored in memory or in a JSON file |
-| **Keyboards** | A fluent `KeyboardBuilder` for chat keypads and inline keypads, with row layout via `adjust()` and support for every documented button type |
-| **Formatting** | `FormattedText`, a builder that tracks text and metadata parts together and counts UTF-16 units correctly (emoji included), so the API's all-or-nothing metadata validation never surprises you |
-| **Running** | Long polling with a persisted offset cursor, a standard library webhook server, and framework-agnostic webhook feeding for Django, FastAPI or Flask |
-| **Dependencies** | **None.** Python 3.10+ and the standard library only |
+| **مدل‌های تایپ‌دار** | دیتاکلس برای همه اشیای API (Message ،Update ،InlineMessage ،Chat ،Keypad ،Button ،Poll ،File ،Metadata و بیشتر) و همه اینام‌های مستند، با `from_dict` و `to_dict` و سازگار با فیلدهای ناشناخته آینده |
+| **کلاینت بات** | هر ۱۹ متد API به‌صورت متد تایپ‌دار روی یک آبجکت `Bot`، ترانسپورت HTTP قابل تعویض، خطاهای واضح `APIError` و `TransportError`، و توکنی که هرگز در لاگ یا repr چاپ نمی‌شود |
+| **مسیریابی** | یک `Dispatcher` و هر تعداد `Router`، با دکوراتور جدا برای هر نوع آپدیت: پیام، ویرایش و حذف پیام، شروع و بلاک بات، رویدادهای گروه و کلیک کی‌پد اینلاین |
+| **فیلترها** | ‏`Command` ،`Text` ،`ButtonId` ،`ChatType` ،`StateFilter`، هر تابع ساده، و فیلتر جادویی `F` (مثل `F.text == "سلام"`)، همه قابل ترکیب با `&` و `\|` و `~` |
+| **FSM** | ‏`StatesGroup` و `FSMContext` جدا برای هر (چت، کاربر) برای گفتگوهای چندمرحله‌ای، در حافظه یا در فایل JSON |
+| **کیبورد** | سازنده روان `KeyboardBuilder` برای کی‌پد چت و اینلاین، چیدمان سطری با `adjust()` و پشتیبانی از همه انواع دکمه مستند |
+| **فرمت‌بندی** | ‏`FormattedText`: سازنده‌ای که متن و قطعه‌های متادیتا را با هم نگه می‌دارد و واحدهای UTF-16 را درست می‌شمارد (اموجی‌ها هم)، تا اعتبارسنجی همه‌یا‌هیچ متادیتای API غافلگیرتان نکند |
+| **اجرا** | پولینگ با ذخیره کرسر آفست روی دیسک، سرور وب‌هوک با کتابخانه استاندارد، و تغذیه وب‌هوک در هر فریم‌ورک (Django ،FastAPI ،Flask) |
+| **وابستگی** | **هیچ.** فقط پایتون 3.10 به بالا و کتابخانه استاندارد |
 
-## Install
+## نصب
 
-Python 3.10 or newer is required. Until the first PyPI release, install
-from GitHub:
+پایتون 3.10 یا جدیدتر لازم است. تا انتشار اول روی PyPI، نصب از گیت‌هاب:
+
+</div>
 
 ```bash
 pip install git+https://github.com/AmirAsadyan/rubikabot.git
 ```
 
-> `pip install rubikabot` will work as soon as the package is published
-> on PyPI. The name is reserved for this project.
+<div dir="rtl">
 
-Then create a bot with **BotFather** inside Rubika and keep the token it
-gives you somewhere safe: an environment variable, a secret manager, a
-file outside your repo. **Never commit a token.**
+> به‌محض انتشار پکیج روی PyPI، دستور `pip install rubikabot` هم کار
+> می‌کند. این نام برای همین پروژه است.
+
+بعد با **BotFather** داخل روبیکا یک بات بسازید و توکنی که می‌دهد را جای
+امنی نگه دارید: متغیر محیطی، سیکرت‌منیجر، یا فایلی بیرون از ریپو.
+**توکن را هرگز کامیت نکنید.**
+
+</div>
 
 ```bash
-export RUBIKA_BOT_TOKEN="the token from BotFather"
+export RUBIKA_BOT_TOKEN="توکنی که از BotFather گرفتید"
 ```
 
-## Your first bot
+<div dir="rtl">
 
-A complete bot with a menu, a poll and an echo fallback:
+## اولین بات شما
+
+یک بات کامل با منو، نظرسنجی و اکوی پیش‌فرض:
+
+</div>
 
 ```python
 import os
@@ -131,28 +151,33 @@ def fallback(message):
 dp.start_polling(offset_file=".rubika_offset.json")
 ```
 
-Run it, open your bot in Rubika, send `/start`. The offset file keeps
-the polling cursor, so restarting the bot does not replay old updates.
+<div dir="rtl">
 
-## Handlers and routers
+اجرا کنید، بات را در روبیکا باز کنید و `/start` بفرستید. فایل آفست کرسر
+پولینگ را نگه می‌دارد، پس ری‌استارت بات آپدیت‌های قدیمی را دوباره پخش
+نمی‌کند.
 
-Every update kind has its own decorator. The handler's first argument is
-the event object; ask for `state`, `bot`, `command_args` or `data` by
-name and the dispatcher injects them.
+## هندلرها و روترها
 
-| Decorator | Event you receive | Fires when |
+هر نوع آپدیت دکوراتور خودش را دارد. آرگومان اول هندلر آبجکت رویداد است؛
+`state` ،`bot` ،`command_args` یا `data` را اگر در امضای تابع بنویسید،
+دیسپچر خودش تزریق می‌کند.
+
+| دکوراتور | رویدادی که می‌گیرید | کی اجرا می‌شود |
 |---|---|---|
-| `@dp.message(...)` | `Message` | a new message arrives, including chat keypad taps |
-| `@dp.edited_message(...)` | `Message` | a message is edited |
-| `@dp.removed_message(...)` | `Update` | a message is removed |
-| `@dp.started_bot(...)` / `@dp.stopped_bot(...)` | `Update` | a user starts or blocks the bot |
-| `@dp.event(...)` | `Update` | the bot is added to or removed from a group, or its permissions change |
-| `@dp.inline_message(...)` | `InlineMessage` | an inline keypad button is tapped |
-| `@dp.update(...)` | `Update` | any update, after the kind-specific handlers |
+| ‏`@dp.message(...)` | ‏`Message` | پیام جدید رسید، از جمله کلیک روی کی‌پد چت |
+| ‏`@dp.edited_message(...)` | ‏`Message` | پیامی ویرایش شد |
+| ‏`@dp.removed_message(...)` | ‏`Update` | پیامی حذف شد |
+| ‏`@dp.started_bot(...)` و `@dp.stopped_bot(...)` | ‏`Update` | کاربر بات را شروع یا بلاک کرد |
+| ‏`@dp.event(...)` | ‏`Update` | بات به گروه اضافه یا حذف شد، یا دسترسی‌هایش عوض شد |
+| ‏`@dp.inline_message(...)` | ‏`InlineMessage` | روی دکمه کی‌پد اینلاین کلیک شد |
+| ‏`@dp.update(...)` | ‏`Update` | هر آپدیتی، بعد از هندلرهای مخصوص خودش |
 
-Handlers run in registration order and the first match wins, so put
-specific handlers before catch-alls. For anything bigger than one file,
-split handlers into routers, one per feature, and include them:
+هندلرها به ترتیب ثبت اجرا می‌شوند و اولی که بخورد برنده است؛ پس هندلرهای
+خاص را قبل از هندلرهای کلی بگذارید. برای پروژه‌های بزرگ‌تر از یک فایل،
+هندلرها را در روترها جدا کنید، یکی برای هر قابلیت:
+
+</div>
 
 ```python
 from rubikabot import Router
@@ -166,43 +191,53 @@ def open_shop(message):
 dp.include_router(shop)
 ```
 
-Messages are bound to their chat and bot, so they can answer themselves:
-`message.answer(...)`, `message.reply(...)`, `message.edit_text(...)`,
-`message.delete()`. Inline messages can `answer(...)`,
-`edit_text(...)` and `edit_keypad(...)` the message they belong to.
+<div dir="rtl">
 
-## Filters
+پیام‌ها به چت و بات خودشان وصل‌اند و خودشان می‌توانند جواب بدهند:
+`message.answer(...)` ،`message.reply(...)` ،`message.edit_text(...)` و
+`message.delete()`. پیام‌های اینلاین هم روی پیام متعلق به خودشان
+`answer(...)` ،`edit_text(...)` و `edit_keypad(...)` دارند.
 
-Filters decide which handler an event goes to. They run in order, they
-combine, and any plain callable taking a filter context works too.
+## فیلترها
+
+فیلترها تصمیم می‌گیرند هر رویداد به کدام هندلر برسد. به ترتیب اجرا
+می‌شوند، با هم ترکیب می‌شوند، و هر تابع ساده‌ای که کانتکست فیلتر بگیرد
+هم کار می‌کند.
+
+</div>
 
 ```python
 from rubikabot import ButtonId, Command, F, StateFilter, Text
 
-@dp.message(Command("start", "help"))          # /start or /help
-@dp.message(Text(equals="سلام"))               # exact text
-@dp.message(Text(contains="کتاب"))             # substring
-@dp.message(ButtonId("buy"))                   # a keypad tap by id
-@dp.message(F.text.startswith("قیمت"))         # magic filter
-@dp.message(F.sender_id.in_(["u1", "u2"]))     # admins only
+@dp.message(Command("start", "help"))          # ‏/start یا /help
+@dp.message(Text(equals="سلام"))               # متن دقیق
+@dp.message(Text(contains="کتاب"))             # شامل زیریرشته
+@dp.message(ButtonId("buy"))                   # کلیک کی‌پد با آیدی
+@dp.message(F.text.startswith("قیمت"))         # فیلتر جادویی
+@dp.message(F.sender_id.in_(["u1", "u2"]))     # فقط ادمین‌ها
 @dp.message(Text(contains="کتاب") & ~Text(contains="قدیمی"))
 ```
 
-A command handler can take the rest of the command line as
-`command_args`: `/start ref-9` gives `command_args == "ref-9"`, which
-pairs with the deep-link value in `message.start_id`.
+<div dir="rtl">
 
-## Keypads
+هندلر کامند می‌تواند ادامه خط فرمان را با اسم `command_args` بگیرد:
+برای `/start ref-9` مقدار `command_args` برابر `"ref-9"` است؛ همان مقداری
+که برای دیپ‌لینک در `message.start_id` هم می‌آید.
 
-Rubika has two kinds of keypads, and rubikabot handles both:
+## کی‌پدها
 
-- A **chat keypad** replaces the user's keyboard. Its taps arrive as
-  normal messages whose `aux_data.button_id` you can read as
-  `message.button_id`, so they are handled with `@dp.message`.
-- An **inline keypad** sits under a message. Its taps arrive separately
-  as `InlineMessage` events and are handled with `@dp.inline_message`.
+روبیکا دو جور کی‌پد دارد و روبیکابات هر دو را پوشش می‌دهد:
 
-Build either one with the same builder:
+- **کی‌پد چت** جای کیبورد کاربر را می‌گیرد. کلیک‌هایش مثل پیام عادی
+  می‌رسند و آیدی دکمه از `message.button_id` خوانده می‌شود؛ پس با
+  `@dp.message` هندل می‌شوند.
+- **کی‌پد اینلاین** زیر یک پیام می‌نشیند. کلیک‌هایش جدا و به‌صورت
+  رویداد `InlineMessage` می‌رسند و با `@dp.inline_message` هندل
+  می‌شوند.
+
+هر دو را با یک سازنده بسازید:
+
+</div>
 
 ```python
 confirm = (KeyboardBuilder()
@@ -220,21 +255,24 @@ def confirmed(inline):
     inline.edit_text("انجام شد ✅")
 ```
 
-Buttons without an explicit `id` get sequential ids (`"1"`, `"2"`, ...).
-In real flows give stable ids, because handlers match on them. Every
-documented button type is available through the `type` argument and its
-payload model: `Selection`, `Calendar` (Persian or Gregorian),
-`NumberPicker`, `StringPicker`, `Location`,
-`AskMyPhoneNumber`, `AskMyLocation`, `CameraImage`, `GalleryVideo`,
-`File`, `Link`, `Barcode` and more.
+<div dir="rtl">
 
-To remove a chat keypad later, call `bot.edit_chat_keypad(chat_id)`
-with no keypad.
+دکمه‌های بدون `id` آیدی ترتیبی می‌گیرند (`"1"` ،`"2"` و …). در فلوی واقعی
+آیدی ثابت بدهید، چون هندلرها روی همان‌ها مچ می‌شوند. همه انواع دکمه مستند
+از راه آرگومان `type` و مدل پی‌لودشان در دسترس‌اند: `Selection` ،`Calendar`
+(جلالی یا میلادی)، `NumberPicker` ،`StringPicker` ،`Location`،
+`AskMyPhoneNumber` ،`AskMyLocation` ،`CameraImage` ،`GalleryVideo`،
+`File` ،`Link` ،`Barcode` و بیشتر.
 
-## Multi-step forms with FSM
+برای حذف کی‌پد چت در ادامه، `bot.edit_chat_keypad(chat_id)` را بدون
+کی‌پد صدا بزنید.
 
-Rubika has no session concept, so rubikabot keeps one state and one data
-dict per (chat, user) pair:
+## فرم‌های چندمرحله‌ای با FSM
+
+روبیکا مفهوم سشن ندارد، پس روبیکابات برای هر جفت (چت، کاربر) یک وضعیت و
+یک دیکشنری دیتا نگه می‌دارد:
+
+</div>
 
 ```python
 from rubikabot import Router, State, StatesGroup, StateFilter
@@ -265,18 +303,21 @@ def get_age(message, state):
 dp.include_router(router)
 ```
 
-State lives in memory by default. Pass a `FileStorage("fsm.json")` to
-the `Dispatcher` to survive restarts, or implement the small storage
-interface yourself for a database.
+<div dir="rtl">
 
-## Formatted text
+وضعیت پیش‌فرض در حافظه است. برای بقا بین ری‌استارت‌ها به `Dispatcher`
+یک `FileStorage("fsm.json")` بدهید، یا اینترفیس کوچک ذخیره‌سازی را
+خودتان برای دیتابیس پیاده کنید.
 
-Formatted messages are sent as plain text plus *metadata parts*: a type
-(Bold, Italic, Link, MentionText, ...), a start index and a length. Two
-rules make this easy to get wrong: indexes count **UTF-16 code units**
-(most emoji count as 2), and **one invalid part rejects the whole
-message**. `FormattedText` tracks both sides together so you cannot
-drift:
+## متن فرمت‌دار
+
+پیام فرمت‌دار یعنی متن ساده به‌همراه **قطعه‌های متادیتا**: یک نوع
+(Bold ،Italic ،Link ،MentionText و …)، یک اندیس شروع و یک طول. دو قانون
+این کار را خطاپذیر می‌کند: اندیس‌ها **واحد UTF-16** می‌شمارند (بیشتر
+اموجی‌ها ۲ واحدند) و **یک قطعه نامعتبر کل پیام را رد می‌کند**.
+`FormattedText` هر دو طرف را با هم نگه می‌دارد تا از هم جا نمانند:
+
+</div>
 
 ```python
 from rubikabot import FormattedText
@@ -290,87 +331,109 @@ msg = (FormattedText()
 bot.send_message(chat_id, msg.text, metadata=msg.metadata)
 ```
 
-Available styles: `bold`, `italic`, `mono`, `underline`, `strike`,
-`spoiler`, `pre`, `quote`, `link(text, url)` and
-`mention(text, user_id)`. Mentions only work in group chats, per the API
-docs. The builder enforces the API's limit of 30 parts and raises
-`ValidationError` locally, before any request is made.
+<div dir="rtl">
 
-## Files, polls, locations and contacts
+استایل‌های موجود: `bold` ،`italic` ،`mono` ،`underline` ،`strike`،
+`spoiler` ،`pre` ،`quote` ،`link(text, url)` و
+`mention(text, user_id)`. منشن طبق مستندات API فقط در چت‌های گروهی کار
+می‌کند. سازنده سقف ۳۰ قطعه API را هم لوکال اعمال می‌کند و قبل از هر
+درخواستی `ValidationError` می‌دهد.
+
+## فایل، نظرسنجی، موقعیت و مخاطب
+
+</div>
 
 ```python
 from rubikabot.enums import FileType
 
-# Upload once (two API steps, handled for you), then send by file_id
+# یک بار آپلود (دو مرحله API، خودکار انجام می‌شود)، بعد ارسال با file_id
 file_id = bot.upload_file("photo.jpg", FileType.IMAGE)
 bot.send_file(chat_id, file_id, text="این هم عکس")
 
-# Or both in one call
+# یا هر دو در یک صدا
 bot.send_uploaded_file(chat_id, "report.pdf", FileType.FILE)
 
-# Download what a user sent you
-data = bot.download_file(message.file.file_id)   # bytes
+# دانلود چیزی که کاربر فرستاده
+data = bot.download_file(message.file.file_id)   # بایت
 
 bot.send_poll(chat_id, "نظرت؟", ["موافق", "مخالف"])
-bot.send_location(chat_id, "35.6892", "51.3890")   # Tehran
+bot.send_location(chat_id, "35.6892", "51.3890")   # تهران
 bot.send_contact(chat_id, "پشتیبانی", "روبیکابات", "09000000000")
 ```
 
-Documented upload limits: generic files and mp4 video up to **50 MB**,
-images (jpg, gif, png, webp) up to **10 MB**, voice and music as mp3,
-and a Gif as a **silent mp4**.
+<div dir="rtl">
 
-Group moderation is two calls, and never applies to the owner or
-admins:
+سقف‌های مستند آپلود: فایل عمومی و ویدیوی mp4 تا **۵۰ مگابایت**، تصویر
+(jpg ،gif ،png ،webp) تا **۱۰ مگابایت**، ویس و موزیک به صورت mp3، و Gif
+به‌صورت **mp4 بی‌صدا**.
+
+مدیریت گروه دو صداست و روی مالک و ادمین‌ها اعمال نمی‌شود:
+
+</div>
 
 ```python
 bot.ban_chat_member(chat_id, user_id)
 bot.unban_chat_member(chat_id, user_id)
 ```
 
-## Webhooks
+<div dir="rtl">
 
-Polling is the easiest way to run a bot. For production, webhooks push
-updates to you the moment they happen. Rubika connects only to public
-HTTPS addresses, and each update kind gets its own endpoint:
+## وب‌هوک
+
+پولینگ راحت‌ترین راه اجرای بات است. برای پروداکشن، وب‌هوک آپدیت را همان
+لحظه به شما می‌رساند. روبیکا فقط به آدرس‌های عمومی HTTPS وصل می‌شود و
+هر نوع آپدیت اندپوینت خودش را می‌گیرد:
+
+</div>
 
 ```python
 from rubikabot import serve
 
 bot.register_webhooks("https://your.public.domain")
-serve(dp, port=8080)   # put your HTTPS reverse proxy in front of this
+serve(dp, port=8080)   # پروکسی HTTPS خود را جلوی این بگذارید
 ```
 
-Already running Django, FastAPI or Flask? Skip the built-in server and
-feed payloads from your own views:
+<div dir="rtl">
+
+از قبل Django یا FastAPI یا Flask دارید؟ سرور داخلی را کنار بگذارید و
+پی‌لودها را از ویوهای خودتان بدهید:
+
+</div>
 
 ```python
 dp.handle_webhook_payload("update", request_body)   # receiveUpdate
 dp.handle_webhook_payload("inline", request_body)   # receiveInlineMessage
 ```
 
-| | Polling | Webhook |
+<div dir="rtl">
+
+| | پولینگ | وب‌هوک |
 |---|---|---|
-| Setup | none, works anywhere | public domain + HTTPS |
-| Latency | seconds, by interval | instant |
-| Best for | development, small bots, no server | production |
+| راه‌اندازی | هیچ، همه‌جا کار می‌کند | دامنه عمومی + HTTPS |
+| تأخیر | چند ثانیه، به فاصله پولینگ | فوری |
+| مناسب برای | توسعه، بات‌های کوچک، بدون سرور | پروداکشن |
 
-## Error handling and middleware
+## مدیریت خطا و میدل‌ویر
 
-API failures raise `APIError` with the method name, the decoded payload
-and the HTTP status; network and parsing failures raise
-`TransportError`. Inside handlers, register an error handler instead of
-letting the polling loop print tracebacks:
+خطای API، `APIError` می‌دهد با نام متد، پی‌لود دیکودشده و کد وضعیت
+HTTP؛ خطای شبکه و پارس، `TransportError`. داخل هندلرها، به‌جای تریس‌بک در
+حلقه پولینگ، هندلر خطا ثبت کنید:
+
+</div>
 
 ```python
 @dp.errors
 def on_error(event, error):
     print("handler failed:", error)
-    return True   # mark handled
+    return True   # خطا هندل شد
 ```
 
-Middleware wraps every matched handler and is the right place for
-logging, timing, rate limits or an admin gate:
+<div dir="rtl">
+
+میدل‌ویر دور همه هندلرهای مچ‌شده می‌پیچد و جای درست لاگ، زمان‌گیری،
+ریت‌لیمیت یا گیت ادمین است:
+
+</div>
 
 ```python
 @dp.middleware
@@ -379,104 +442,109 @@ def log_calls(handler, event, data):
     return handler(event, data)
 ```
 
-## API coverage
+<div dir="rtl">
 
-All 19 methods of Bot API v3, as methods of `Bot`:
+## پوشش API
 
-| API method | rubikabot |
+هر ۱۹ متد API نسخه ۳، به‌صورت متد روی `Bot`:
+
+| متد API | در روبیکابات |
 |---|---|
-| `getMe` | `bot.get_me()` → `BotInfo` |
-| `sendMessage` | `bot.send_message(chat_id, text, ...)` → message_id |
-| `sendPoll` | `bot.send_poll(chat_id, question, options)` |
-| `sendLocation` | `bot.send_location(chat_id, latitude, longitude)` |
-| `sendContact` | `bot.send_contact(chat_id, first_name, last_name, phone_number)` |
-| `getChat` | `bot.get_chat(chat_id)` → `Chat` |
-| `getUpdates` | `bot.get_updates(offset_id, limit)` → `UpdatesPage` |
-| `forwardMessage` | `bot.forward_message(from_chat_id, message_id, to_chat_id)` |
-| `editMessageText` | `bot.edit_message_text(chat_id, message_id, text)` |
-| `editMessageKeypad` | `bot.edit_message_keypad(chat_id, message_id, keypad)` |
-| `deleteMessage` | `bot.delete_message(chat_id, message_id)` |
-| `setCommands` | `bot.set_commands([BotCommand(...)])` |
-| `updateBotEndpoints` | `bot.update_bot_endpoints(url, type)` or `bot.register_webhooks(base_url)` |
-| `editChatKeypad` | `bot.edit_chat_keypad(chat_id, keypad_or_None)` |
-| `getFile` | `bot.get_file(file_id)` → download URL |
-| `sendFile` | `bot.send_file(chat_id, file_id, text=None)` |
-| `requestSendFile` | handled inside `bot.upload_file(path, file_type)` |
-| `banChatMember` | `bot.ban_chat_member(chat_id, user_id)` |
-| `unbanChatMember` | `bot.unban_chat_member(chat_id, user_id)` |
+| ‏`getMe` | ‏`bot.get_me()` ← ‏`BotInfo` |
+| ‏`sendMessage` | ‏`bot.send_message(chat_id, text, ...)` ← آیدی پیام |
+| ‏`sendPoll` | ‏`bot.send_poll(chat_id, question, options)` |
+| ‏`sendLocation` | ‏`bot.send_location(chat_id, latitude, longitude)` |
+| ‏`sendContact` | ‏`bot.send_contact(chat_id, first_name, last_name, phone_number)` |
+| ‏`getChat` | ‏`bot.get_chat(chat_id)` ← ‏`Chat` |
+| ‏`getUpdates` | ‏`bot.get_updates(offset_id, limit)` ← ‏`UpdatesPage` |
+| ‏`forwardMessage` | ‏`bot.forward_message(from_chat_id, message_id, to_chat_id)` |
+| ‏`editMessageText` | ‏`bot.edit_message_text(chat_id, message_id, text)` |
+| ‏`editMessageKeypad` | ‏`bot.edit_message_keypad(chat_id, message_id, keypad)` |
+| ‏`deleteMessage` | ‏`bot.delete_message(chat_id, message_id)` |
+| ‏`setCommands` | ‏`bot.set_commands([BotCommand(...)])` |
+| ‏`updateBotEndpoints` | ‏`bot.update_bot_endpoints(url, type)` یا `bot.register_webhooks(base_url)` |
+| ‏`editChatKeypad` | ‏`bot.edit_chat_keypad(chat_id, keypad_or_None)` |
+| ‏`getFile` | ‏`bot.get_file(file_id)` ← آدرس دانلود |
+| ‏`sendFile` | ‏`bot.send_file(chat_id, file_id, text=None)` |
+| ‏`requestSendFile` | داخل `bot.upload_file(path, file_type)` انجام می‌شود |
+| ‏`banChatMember` | ‏`bot.ban_chat_member(chat_id, user_id)` |
+| ‏`unbanChatMember` | ‏`bot.unban_chat_member(chat_id, user_id)` |
 
-Anything the typed methods do not cover is one call away with
-`bot.api_call("methodName", **params)`, and the HTTP transport is
-replaceable: pass any object with `post_json`, `post_multipart` and
-`get_bytes` to `Bot(token, transport=...)`.
+هر چیزی که متدهای تایپ‌دار پوشش ندهند، یک صدا فاصله دارد:
+`bot.api_call("methodName", **params)`. ترانسپورت HTTP هم قابل تعویض
+است: هر آبجکتی با `post_json` و `post_multipart` و `get_bytes` را به
+`Bot(token, transport=...)` بدهید.
 
-## Testing your bot
+## تست‌کردن بات
 
-Handlers are plain functions, so they test well without a network or a
-token: build a `Bot` on a fake transport, feed update dicts into the
-dispatcher, and assert on the calls the fake recorded. The library's own
-suite in [tests/](tests) does exactly this for every feature; copy its
-`fake_transport.py` as a starting point.
+هندلرها تابع‌های ساده‌اند و بدون شبکه و توکن خوب تست می‌شوند: یک `Bot`
+روی ترانسپورت فیک بسازید، دیکت‌های آپدیت را به دیسپچر بدهید و روی صداهایی
+که فیک ضبط کرده اسرت کنید. سوئیت خود کتابخانه در [tests/](tests) دقیقاً
+همین کار را برای همه امکانات می‌کند؛ فایل `fake_transport.py` آن نقطه
+شروع خوبی است.
+
+</div>
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## FAQ
+<div dir="rtl">
 
-**Where do I get a token?**
-From **BotFather** inside Rubika. Create the bot there and keep the
-token secret.
+## سؤالات پرتکرار
 
-**Is this the `rubika_bot` package from the official examples?**
-No. The official docs' examples import a thin function-based package
-(PyPI `rubika-bot`, import name `rubika_bot`) where you pass the token
-into every call. rubikabot (one word, import name `rubikabot`) is the
-framework layer on top of the same API: a `Bot` object, typed models,
-routing, FSM and builders. Do not mix the two import names.
+**توکن را از کجا بگیرم؟**
+از **BotFather** داخل روبیکا. بات را آنجا بسازید و توکن را محرمانه نگه
+دارید.
 
-**The docs say polling uses `start_id`, but the library uses
-`offset_id`. Why?**
-Because the docs contradict themselves. The overview page mentions
-`start_id` for polling; the methods page defines `getUpdates` with
-`offset_id` in and `next_offset_id` out, which is what the live API
-accepts, so the library follows the methods page. (`start_id` is a real
-field, but it lives in `aux_data` and means the deep-link value a user
-entered the bot with. Read it as `message.start_id`.)
+**این همان پکیج `rubika_bot` مثال‌های رسمی است؟**
+نه. مثال‌های مستندات رسمی از یک پکیج تابعیِ نازک ایمپورت می‌کنند (روی
+PyPI با نام `rubika-bot` و اسم ایمپورت `rubika_bot`) که در آن توکن را
+داخل هر صدا پاس می‌دهید. روبیکابات (یک کلمه، اسم ایمپورت `rubikabot`)
+لایه فریم‌ورکی روی همان API است: آبجکت `Bot`، مدل‌های تایپ‌دار، مسیریابی،
+FSM و سازنده‌ها. دو اسم ایمپورت را با هم قاطی نکنید.
 
-**Can I use rubikabot with Django or FastAPI?**
-Yes. Create one `Bot` and one `Dispatcher` in your project, register
-webhooks to your own URLs, and call `dp.handle_webhook_payload(...)`
-from your views. The FSM storage interface is small enough to back with
-your database.
+**مستندات می‌گوید پولینگ با `start_id` است، ولی کتابخانه `offset_id`
+استفاده می‌کند؛ چرا؟**
+چون مستندات با خودش تناقض دارد. صفحه معرفی برای پولینگ از `start_id`
+می‌گوید؛ صفحه متدها `getUpdates` را با `offset_id` در ورودی و
+`next_offset_id` در خروجی تعریف می‌کند و API زنده همان را قبول می‌کند،
+پس کتابخانه صفحه متدها را دنبال می‌کند. (`start_id` فیلد واقعی است، ولی
+داخل `aux_data` زندگی می‌کند و یعنی مقدار دیپ‌لینکی که کاربر با آن وارد
+بات شده؛ آن را از `message.start_id` بخوانید.)
 
-**Does rubikabot support async?**
-Version 0.1 is synchronous by design: the API is plain HTTP and sync
-keeps the code and the mental model simple. The transport interface is
-the seam where an async client can land later without breaking handler
-code.
+**با Django یا FastAPI هم می‌شود استفاده کرد؟**
+بله. یک `Bot` و یک `Dispatcher` در پروژه‌تان بسازید، وب‌هوک‌ها را روی
+آدرس‌های خودتان ثبت کنید و از ویوها `dp.handle_webhook_payload(...)` را
+صدا بزنید. اینترفیس ذخیره‌سازی FSM آن‌قدر کوچک است که با دیتابیس خودتان
+هم پشتش می‌نشیند.
 
-## Roadmap
+**روبیکابات async هم دارد؟**
+نسخه ۰٫۱ عمداً سنکرون است: API، HTTP ساده است و سنکرون‌بودن کد و مدل
+ذهنی را ساده نگه می‌دارد. اینترفیس ترانسپورت همان درزی است که بعداً
+کلاینت async بدون شکستن کد هندلرها می‌تواند رویش بنشیند.
 
-- PyPI release (`pip install rubikabot`)
-- Async client with the same handler API
-- More storage backends for FSM (SQLite, Redis)
-- Selection-item endpoints (`GetSelectionItem`, `SearchSelectionItems`)
-  helpers
+## نقشه راه
 
-## Contributing
+- انتشار روی PyPI (‏`pip install rubikabot`)
+- کلاینت async با همان API هندلرها
+- بک‌اندهای بیشتر برای FSM (SQLite ،Redis)
+- هلپر برای اندپوینت‌های آیتم انتخاب (`GetSelectionItem` ،`SearchSelectionItems`)
 
-Issues and pull requests are welcome. Please read
-[CONTRIBUTING.md](CONTRIBUTING.md) first: field names follow the
-official docs (methods page wins), runtime dependencies stay at zero,
-and every behaviour change needs an offline test.
+## مشارکت
 
-## License
+ایشو و پول‌ریکوئست خوش‌آمد است. اول [CONTRIBUTING.md](CONTRIBUTING.md)
+را بخوانید: نام فیلدها تابع مستندات رسمی‌اند (صفحه متدها برنده است)،
+وابستگی ران‌تایم صفر می‌ماند، و هر تغییر رفتاری یک تست آفلاین می‌خواهد.
 
-MIT. See [LICENSE](LICENSE).
+## مجوز
 
-<div align="center">
+MIT. متن کامل در [LICENSE](LICENSE).
 
-Made for the Rubika developer community · [Official Bot API docs](https://rubika.ir/botapi)
+</div>
+
+<div dir="rtl" align="center">
+
+ساخته‌شده برای جامعه توسعه‌دهنده‌های روبیکا · [مستندات رسمی Bot API](https://rubika.ir/botapi)
 
 </div>
