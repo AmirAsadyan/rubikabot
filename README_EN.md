@@ -19,6 +19,7 @@ Typed models · Dispatcher & routers · Filters · FSM · Keyboard builders · Z
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
 [![Dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](pyproject.toml)
 [![GitHub stars](https://img.shields.io/github/stars/AmirAsadyan/rubikabot?style=social)](https://github.com/AmirAsadyan/rubikabot/stargazers)
+[![PyPI](https://img.shields.io/pypi/v/pyrubikabot)](https://pypi.org/project/pyrubikabot/)
 
 </div>
 
@@ -85,15 +86,19 @@ dp.start_polling()
 
 ## Install
 
-Python 3.10 or newer is required. Until the first PyPI release, install
-from GitHub:
+Python 3.10 or newer is required. Install from PyPI:
 
 ```bash
-pip install git+https://github.com/AmirAsadyan/rubikabot.git
+pip install pyrubikabot
 ```
 
-> `pip install rubikabot` will work as soon as the package is published
-> on PyPI. The name is reserved for this project.
+> Why is the install name `pyrubikabot` but the import name
+> `rubikabot`? PyPI rejects the distribution name `rubikabot` as too
+> similar to the existing official `rubika-bot` project (it strips
+> separators when comparing names), so the PyPI distribution is
+> `pyrubikabot` while the package and import stay `rubikabot`.
+> Installing straight from GitHub also works:
+> `pip install git+https://github.com/AmirAsadyan/rubikabot.git`
 
 Then create a bot with **BotFather** inside Rubika and keep the token it
 gives you somewhere safe: an environment variable, a secret manager, a
@@ -465,7 +470,6 @@ code.
 
 ## Roadmap
 
-- PyPI release (`pip install rubikabot`)
 - Async client with the same handler API
 - More storage backends for FSM (SQLite, Redis)
 - Selection-item endpoints (`GetSelectionItem`, `SearchSelectionItems`)

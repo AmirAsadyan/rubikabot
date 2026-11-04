@@ -19,6 +19,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
 [![Dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](pyproject.toml)
 [![GitHub stars](https://img.shields.io/github/stars/AmirAsadyan/rubikabot?style=social)](https://github.com/AmirAsadyan/rubikabot/stargazers)
+[![PyPI](https://img.shields.io/pypi/v/pyrubikabot)](https://pypi.org/project/pyrubikabot/)
 
 </div>
 
@@ -89,18 +90,22 @@ dp.start_polling()
 
 ## نصب
 
-پایتون 3.10 یا جدیدتر لازم است. تا انتشار اول روی PyPI، نصب از گیت‌هاب:
+پایتون 3.10 یا جدیدتر لازم است. نصب از PyPI:
 
 </div>
 
 ```bash
-pip install git+https://github.com/AmirAsadyan/rubikabot.git
+pip install pyrubikabot
 ```
 
 <div dir="rtl">
 
-> به‌محض انتشار پکیج روی PyPI، دستور `pip install rubikabot` هم کار
-> می‌کند. این نام برای همین پروژه است.
+> چرا اسم نصب `pyrubikabot` است ولی ایمپورت `rubikabot`؟ چون PyPI اسم
+> `rubikabot` را به‌خاطر شباهت به پکیج رسمی `rubika-bot` قبول نمی‌کند
+> (در مقایسه اسم‌ها جداکننده‌ها را حذف می‌کند). پس اسم توزیع روی PyPI
+> `pyrubikabot` است و اسم پکیج و ایمپورت همان `rubikabot` می‌ماند.
+> نصب مستقیم از گیت‌هاب هم ممکن است:
+> `pip install git+https://github.com/AmirAsadyan/rubikabot.git`
 
 بعد با **BotFather** داخل روبیکا یک بات بسازید و توکنی که می‌دهد را جای
 امنی نگه دارید: متغیر محیطی، سیکرت‌منیجر، یا فایلی بیرون از ریپو.
@@ -526,7 +531,6 @@ FSM و سازنده‌ها. دو اسم ایمپورت را با هم قاطی �
 
 ## نقشه راه
 
-- انتشار روی PyPI (‏`pip install rubikabot`)
 - کلاینت async با همان API هندلرها
 - بک‌اندهای بیشتر برای FSM (SQLite ،Redis)
 - هلپر برای اندپوینت‌های آیتم انتخاب (`GetSelectionItem` ،`SearchSelectionItems`)
