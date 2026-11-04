@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rubikabot"
+version = "0.1.0"
+description = "A modern Python framework for building Rubika bots: typed Bot API client, dispatcher, routers, filters, FSM, keyboard builders and formatting helpers. Zero runtime dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Amir Asadyan" },
+]
+keywords = ["rubika", "bot", "rubika-bot", "bot-api", "messenger", "iran"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Chat",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/AmirAsadyan/rubikabot"
+Repository = "https://github.com/AmirAsadyan/rubikabot"
+Issues = "https://github.com/AmirAsadyan/rubikabot/issues"
+Documentation = "https://rubika.ir/botapi"
+
+[tool.setuptools.packages.find]
+where = ["src"]
