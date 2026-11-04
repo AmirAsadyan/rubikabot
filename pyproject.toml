@@ -3,7 +3,10 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rubikabot"
+# Distribution name on PyPI is "pyrubikabot": plain "rubikabot" is rejected
+# by PyPI as too similar to the existing "rubika-bot" project. The import
+# package stays "rubikabot".
+name = "pyrubikabot"
 version = "0.1.0"
 description = "A modern Python framework for building Rubika bots: typed Bot API client, dispatcher, routers, filters, FSM, keyboard builders and formatting helpers. Zero runtime dependencies."
 readme = "README.md"
